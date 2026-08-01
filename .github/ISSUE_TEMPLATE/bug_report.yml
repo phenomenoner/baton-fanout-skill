@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a wrong dispatch decision, validation failure, or documentation problem
+title: "bug: "
+labels: ["type:bug", "needs-triage"]
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Dispatch scenario
+      description: Describe the task shape, shared context, ownership, and expected decision.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: runtime
+    attributes:
+      label: Agent runtime and skill version
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Public bundle hygiene
+      options:
+        - label: I removed credentials, private paths, and private data from this report.
+          required: true

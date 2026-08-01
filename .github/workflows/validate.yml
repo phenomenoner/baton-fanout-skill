@@ -1,0 +1,17 @@
+name: Validate skill bundle
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Run release checks
+        run: uv run --with 'PyYAML>=6,<7' python scripts/run_checks.py
