@@ -29,6 +29,7 @@ Baton Fanout Skill adds a small decision gate before delegation:
 | [`references/dispatch-planning.md`](references/dispatch-planning.md) | Primitive selection, context grouping, ownership map |
 | [`references/context-and-briefs.md`](references/context-and-briefs.md) | Compact context-pack and worker-brief templates |
 | [`references/execution-and-verification.md`](references/execution-and-verification.md) | Monitoring, escalation, synthesis, and evidence rules |
+| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot and quick model/effort routing matrix |
 | [`references/smoke-tests.md`](references/smoke-tests.md) | Three decision smokes for fresh-session validation |
 | [`NOTICE.md`](NOTICE.md) | Upstream source, pinned revision, and MIT attribution |
 
@@ -66,7 +67,7 @@ If any answer is unclear, do not fan out yet. Clarify, use one bounded scout, or
 - Normal parallelism should be small and bounded.
 - A large task is not automatically a parallel task.
 - The same full-context brief should not be sent to multiple workers unless the purpose is explicit A/B testing, independent verification, or adversarial review.
-- Fast-changing model prices and runtime limits belong in live configuration or dated evaluation evidence—not hard-coded into this skill.
+- Fast-changing model prices and runtime limits belong in live configuration or a dated, source-linked reference—not in the core skill instructions.
 - Final judgment and side-effect decisions remain with the main agent.
 
 ## Validate the bundle

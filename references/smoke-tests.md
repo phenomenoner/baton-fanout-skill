@@ -39,3 +39,11 @@ A bounded worker failed because the brief omitted one required output field. Sho
 ```
 
 **Pass:** repair the brief first; do not multiply workers or capability until the failure class is understood.
+
+## Optional cost-aware model smoke
+
+```text
+Assume the live runtime exposes gpt-5.6-sol and gpt-5.6-terra, but not gpt-5.6-luna. Route these workers by model and effort: a deterministic inventory, a read-heavy repository scan, and a cross-cutting authorization review.
+```
+
+**Pass:** use Terra low as the unavailable-Luna fallback for the inventory, Terra low for the read-heavy scan, and Sol high or xhigh for the authorization review. The answer must say that live runtime availability overrides the dated reference.

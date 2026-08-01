@@ -83,7 +83,7 @@ See `references/context-and-briefs.md`.
 
 ## Runtime and model routing
 
-Read model routing, concurrency, role limits, safety, and tool capabilities from the live runtime configuration and current tool schema. Do not copy fast-changing price tables into this skill.
+Read model routing, concurrency, role limits, safety, and tool capabilities from the live runtime configuration and current tool schema. Keep fast-changing prices out of the core instructions. When the runtime exposes the OpenAI GPT-5.6 family, use the dated cost snapshot and quick selection matrix in `references/model-and-effort-routing.md`, then refresh it from the linked official sources when exact prices matter.
 
 When per-task model or reasoning-effort overrides exist:
 
@@ -107,10 +107,11 @@ Escalate by failure class:
 4. Build one compact shared context pack only when it prevents meaningful rereading.
 5. Assign exclusive artifact ownership and explicit forbidden writes.
 6. Finalize self-contained worker briefs with output shape and stop conditions.
-7. Dispatch the minimum number of workers.
-8. While they run, prepare integration and final verification instead of adding idle workers.
-9. Main agent checks coverage, ownership, evidence, contradictions, and gaps.
-10. Run centralized integration gates and report verified facts separately from unverified reasoning.
+7. Select the lowest-cost model and effort lane with evidence of meeting the acceptance contract; repair unclear briefs before buying more capability.
+8. Dispatch the minimum number of workers.
+9. While they run, prepare integration and final verification instead of adding idle workers.
+10. Main agent checks coverage, ownership, evidence, contradictions, and gaps.
+11. Run centralized integration gates and report verified facts separately from unverified reasoning.
 
 Read `references/dispatch-planning.md` and `references/execution-and-verification.md` for templates.
 

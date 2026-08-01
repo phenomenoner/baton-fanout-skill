@@ -41,9 +41,25 @@ class PublicBundleTests(unittest.TestCase):
             "references/dispatch-planning.md",
             "references/context-and-briefs.md",
             "references/execution-and-verification.md",
+            "references/model-and-effort-routing.md",
             "references/smoke-tests.md",
         ):
             self.assertTrue((ROOT / rel).is_file(), rel)
+
+    def test_model_routing_reference_is_dated_and_refreshable(self) -> None:
+        routing = (ROOT / "references" / "model-and-effort-routing.md").read_text(
+            encoding="utf-8"
+        )
+        for required in (
+            "gpt-5.6-sol",
+            "gpt-5.6-terra",
+            "gpt-5.6-luna",
+            "2026-08-01",
+            "relative cost proxy",
+            "https://developers.openai.com/api/docs/pricing",
+            "https://developers.openai.com/api/docs/changelog",
+        ):
+            self.assertIn(required, routing)
 
     def test_no_machine_specific_home_paths(self) -> None:
         text = public_text_bundle()

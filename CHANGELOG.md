@@ -2,6 +2,13 @@
 
 All notable changes to Baton Fanout Skill are documented here.
 
+## [Unreleased]
+
+### Added
+
+- Dated GPT-5.6 model and reasoning-effort routing reference with current Sol, Terra, and Luna cost ratios, live-capability fallbacks, and escalation rules.
+- Validation coverage that requires the routing reference, official pricing sources, and refresh metadata.
+
 ## [1.0.0] - 2026-08-01
 
 ### Added

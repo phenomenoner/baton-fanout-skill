@@ -19,6 +19,7 @@ REQUIRED = [
     ROOT / "references" / "dispatch-planning.md",
     ROOT / "references" / "context-and-briefs.md",
     ROOT / "references" / "execution-and-verification.md",
+    ROOT / "references" / "model-and-effort-routing.md",
     ROOT / "references" / "smoke-tests.md",
 ]
 
