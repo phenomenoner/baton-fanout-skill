@@ -96,6 +96,8 @@ When a lower-cost model is unavailable from the native delegation schema, keep a
 
 This bridge is not a new authority or capability. Do not use it for architecture, security, authorization, independent review, release or cutover judgment, live operations, credentials, or overlapping writes. Treat maximum effort as exception-budgeted for a demonstrably clear bounded implementation, never as the default for a low-cost lane.
 
+Choose the bridge's outer budget by task shape: about five minutes for one file, 15 minutes for a bounded cross-file proposal, and up to 30 minutes only while observable progress continues. Have the host stream progress into a task WAL outside the read-only workspace so the main agent can inspect it without granting the worker filesystem authority. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion—not merely because a complex bounded task exceeds five minutes.
+
 Escalate by failure class:
 
 - unclear output or missing fields → repair the brief first;

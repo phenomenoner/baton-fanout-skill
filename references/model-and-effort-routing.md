@@ -44,6 +44,8 @@ Use it only after the dispatch brake selects one delegated worker and all of the
 
 Do not send credentials, private receipts, connection profiles, or live configuration to the bridge. Do not use it for architecture, security, authorization, independent review, release or cutover judgment, live operations, or overlapping writes. Preserve an exposed native lane or direct work as the default fallback. `max` is exception-budgeted for a demonstrably clear bounded implementation; it is not the default Luna effort.
 
+Choose an outer bridge budget by task shape: about five minutes for one file, 15 minutes for a bounded cross-file proposal, and up to 30 minutes only while observable progress advances. The host may stream progress into a task WAL outside the read-only workspace for the main agent to inspect. That WAL is evidence only and grants the worker no new filesystem authority. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion; do not stop a complex bounded task solely for exceeding five minutes while progress continues.
+
 ## Effort modifiers
 
 | Effort | Use when | Avoid when |

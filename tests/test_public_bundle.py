@@ -60,6 +60,9 @@ class PublicBundleTests(unittest.TestCase):
             "read-only",
             "main agent",
             "actual patch paths",
+            "outer bridge budget",
+            "task WAL outside the read-only workspace",
+            "no new filesystem authority",
             "https://developers.openai.com/api/docs/pricing",
             "https://developers.openai.com/api/docs/changelog",
         ):
@@ -115,6 +118,8 @@ class PublicBundleTests(unittest.TestCase):
             "optional read-only CLI proposal bridge",
             "runtime-specific guidance",
             "The main agent verifies actual paths",
+            "task WAL outside the workspace",
+            "never grants the worker write authority",
         ):
             self.assertIn(required, readme)
 

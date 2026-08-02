@@ -47,7 +47,9 @@ Shared schemas, registries, indexes, generated outputs, configuration, and lockf
 
 ## Compatibility-bridge proposal contract
 
-Treat a CLI proposal worker as delegated work, not a way around the dispatch brake. Before launch, record exact allowed target paths, the baseline workspace snapshot, permitted read-only checks, structured result fields, and the main-agent integration owner. Require an ephemeral, no-approval, read-only worker that ignores user configuration. Verify its post-run workspace snapshot and parse the actual patch paths as well as declared target paths before the main agent applies any proposal.
+Treat a CLI proposal worker as delegated work, not a way around the dispatch brake. Before launch, record exact allowed target paths, the baseline workspace snapshot, permitted read-only checks, structured result fields, an outer budget, and the main-agent integration owner. Require an ephemeral, no-approval, read-only worker that ignores user configuration. Verify its post-run workspace snapshot and parse the actual patch paths as well as declared target paths before the main agent applies any proposal.
+
+Choose about five minutes for one file, 15 minutes for a bounded cross-file proposal, and up to 30 minutes only while observable progress advances. Have the host render streamed progress to a task WAL outside the read-only workspace; the main agent may inspect it, but the WAL is not a worker write capability or new filesystem authority. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion—not simply because a complex bounded task is still progressing past five minutes.
 
 Do not route unresolved contracts, shared schemas or lockfiles, security or authority work, independent review, releases, cutovers, live operations, or credentials through a compatibility bridge. If its runtime support is absent or the brief fails twice for the same cause, use an exposed lane or direct work instead.
 

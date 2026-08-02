@@ -9,6 +9,7 @@ All notable changes to Baton Fanout Skill are documented here.
 - Dated GPT-5.6 model and reasoning-effort routing reference with current Sol, Terra, and Luna cost ratios, live-capability fallbacks, and escalation rules.
 - Validation coverage that requires the routing reference, official pricing sources, and refresh metadata.
 - Optional, runtime-specific Codex CLI compatibility-bridge guidance for a verified Luna implementation lane when native delegation cannot expose it; the bridge stays read-only, proposal-only, and under main-agent integration and verification.
+- Adaptive compatibility-bridge budget and observable-progress guidance: host-rendered task WALs remain outside the read-only workspace and evidence-only, while stalled work, scope drift, or exhausted budgets trigger intervention.
 
 ## [1.0.0] - 2026-08-01
 

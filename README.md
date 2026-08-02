@@ -51,7 +51,7 @@ Keep `SKILL.md`, `references/`, `LICENSE`, and `NOTICE.md` together when copying
 
 This repository contains guidance, templates, and validation checks. It does not install an orchestrator or grant agents new permissions.
 
-An optional compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for security, review, release, live-operation, or credential work.
+An optional compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for security, review, release, live-operation, or credential work. The host may stream progress to a task WAL outside the workspace for inspection, but that evidence channel never grants the worker write authority; use adaptive outer budgets and intervene on stalled progress rather than a fixed five-minute cutoff.
 
 ## Core decision
 
