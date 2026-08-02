@@ -10,6 +10,7 @@ All notable changes to Baton Fanout Skill are documented here.
 - Validation coverage that requires the routing reference, official pricing sources, and refresh metadata.
 - Optional, runtime-specific Codex CLI compatibility-bridge guidance for a verified Luna implementation lane when native delegation cannot expose it; the bridge stays read-only, proposal-only, and under main-agent integration and verification.
 - Adaptive compatibility-bridge budget and observable-progress guidance: host-rendered task WALs remain outside the read-only workspace and evidence-only, while stalled work, scope drift, or exhausted budgets trigger intervention.
+- Expected-budget versus hard-timeout guidance for compatibility bridges, including latest-WAL-progress intervention, parseable checkpoint emission before late polish, completion buffers, timeout evidence retention, and narrower retry boundaries.
 
 ## [1.0.0] - 2026-08-01
 

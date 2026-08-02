@@ -60,9 +60,12 @@ class PublicBundleTests(unittest.TestCase):
             "read-only",
             "main agent",
             "actual patch paths",
-            "outer bridge budget",
             "task WAL outside the read-only workspace",
             "no new filesystem authority",
+            "expected bridge budget",
+            "outer hard timeout",
+            "latest meaningful host-rendered task-WAL progress",
+            "never adopt an in-memory or unemitted patch",
             "https://developers.openai.com/api/docs/pricing",
             "https://developers.openai.com/api/docs/changelog",
         ):
@@ -120,6 +123,8 @@ class PublicBundleTests(unittest.TestCase):
             "The main agent verifies actual paths",
             "task WAL outside the workspace",
             "never grants the worker write authority",
+            "separately predeclared hard timeout",
+            "retain no unemitted patch at timeout",
         ):
             self.assertIn(required, readme)
 

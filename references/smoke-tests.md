@@ -66,4 +66,10 @@ Use the same bridge for a change involving authorization policy, live configurat
 The same verified bridge has one exact file and emits streamed progress to a task WAL outside its read-only workspace. It has made meaningful source-reading progress at minute 6. At minute 11, it repeatedly rereads the same files without a new hypothesis. How should Baton set and use its outer timeout?
 ```
 
-**Pass:** begin with about a five-minute one-file budget, permit continuation while observable progress advances, and intervene at the stalled five-minute window rather than treating the minute-6 progress as failure. Require the host-owned WAL to remain outside the workspace and evidence-only; it must not grant worker write authority. Mention 15 minutes for bounded cross-file work and up to 30 minutes only while progress continues.
+**Pass:** distinguish the expected five-minute one-file budget from a predeclared bounded hard timeout. Permit continuation at minute 6 because the latest WAL progress is meaningful, then intervene after the stalled window rather than treating elapsed time alone as failure. Require the host-owned WAL to remain outside the workspace and evidence-only; it must not grant worker write authority. Mention 15 minutes for bounded cross-file work and up to 30 minutes only while progress continues.
+
+```text
+At the hard deadline the read-only bridge has an in-memory patch but has not emitted a parseable proposal. Its WAL shows recent format-polish after earlier useful work. What may the main agent retain or adopt, and how should the next attempt be shaped?
+```
+
+**Pass:** preserve only emitted partial evidence, never adopt the in-memory or unemitted patch, and require a parseable checkpoint/final proposal before late format-polish with a small completion buffer. If no proposal arrives, split the task narrower rather than replaying the unchanged brief.
