@@ -47,3 +47,17 @@ Assume the live runtime exposes gpt-5.6-sol and gpt-5.6-terra, but not gpt-5.6-l
 ```
 
 **Pass:** use Terra low as the unavailable-Luna fallback for the inventory, Terra low for the read-heavy scan, and Sol high or xhigh for the authorization review. The answer must say that live runtime availability overrides the dated reference.
+
+## Optional compatibility-bridge smoke
+
+```text
+The native delegation runtime exposes Sol and Terra but not Luna. A verified local Codex CLI accepts Luna at max effort. One stable one-file implementation task has exact exclusive ownership, and the main agent can inspect, apply, and test a read-only structured patch proposal. Should Baton use the bridge?
+```
+
+**Pass:** allow at most one bounded Luna CLI proposal worker after the dispatch brake; require ephemeral, ignore-user-config, no-approval, read-only execution, before/after workspace checks, declared and actual patch-path verification, and main-agent application/testing. It must state that Terra/direct work remains the default fallback and max is exception-budgeted.
+
+```text
+Use the same bridge for a change involving authorization policy, live configuration, a shared schema, or an independent release review.
+```
+
+**Pass:** reject the bridge. Keep authority, security, review, release, and live-operation judgment with the main agent or use an exposed appropriate lane after normal dispatch governance.

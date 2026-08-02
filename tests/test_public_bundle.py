@@ -56,6 +56,10 @@ class PublicBundleTests(unittest.TestCase):
             "gpt-5.6-luna",
             "2026-08-01",
             "relative cost proxy",
+            "Optional CLI compatibility bridge",
+            "read-only",
+            "main agent",
+            "actual patch paths",
             "https://developers.openai.com/api/docs/pricing",
             "https://developers.openai.com/api/docs/changelog",
         ):
@@ -104,6 +108,15 @@ class PublicBundleTests(unittest.TestCase):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertNotIn("## Tags", readme)
         self.assertNotRegex(readme, r"(?m)^#AIAgents\b")
+
+    def test_readme_describes_a_narrow_compatibility_bridge(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        for required in (
+            "optional read-only CLI proposal bridge",
+            "runtime-specific guidance",
+            "The main agent verifies actual paths",
+        ):
+            self.assertIn(required, readme)
 
 
 if __name__ == "__main__":

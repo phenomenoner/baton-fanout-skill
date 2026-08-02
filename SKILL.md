@@ -92,6 +92,10 @@ When per-task model or reasoning-effort overrides exist:
 - start with the lowest capability that has evidence of meeting the acceptance contract;
 - reserve frontier models or maximum effort for ambiguity, contradiction, high-cost errors, or blocking final gates.
 
+When a lower-cost model is unavailable from the native delegation schema, keep an exposed native lane or direct work as the default. A verified runtime-specific CLI compatibility bridge may be considered only after this skill selects one bounded delegation with stable contracts, exact exclusive target paths, and a main-agent integration owner. It must be ephemeral, ignore user configuration, require no approval, run read-only, and return a structured `apply_patch` proposal. The main agent verifies declared and actual patch paths, applies an accepted proposal itself, and runs the checks.
+
+This bridge is not a new authority or capability. Do not use it for architecture, security, authorization, independent review, release or cutover judgment, live operations, credentials, or overlapping writes. Treat maximum effort as exception-budgeted for a demonstrably clear bounded implementation, never as the default for a low-cost lane.
+
 Escalate by failure class:
 
 - unclear output or missing fields → repair the brief first;

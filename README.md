@@ -18,6 +18,7 @@ Baton Fanout Skill adds a small decision gate before delegation:
 - **Group by context.** Split by source, artifact, dependency, and verification surface—not by bullet count.
 - **Own every write.** Give each writable artifact one owner and serialize shared contracts.
 - **Route intentionally.** Treat runtime defaults as fallbacks; select per-task model and reasoning effort when the platform supports it.
+- **Bridge narrowly.** When native delegation cannot expose a verified low-cost lane, an optional read-only CLI proposal bridge may be used for one stable, exclusively owned implementation task; the main agent still applies and verifies the patch.
 - **Stop blind retries.** Repair unclear briefs first and escalate by failure class instead of relaunching identical workers.
 - **Verify centrally.** Worker self-reports are inputs, not completion evidence.
 
@@ -29,7 +30,7 @@ Baton Fanout Skill adds a small decision gate before delegation:
 | [`references/dispatch-planning.md`](references/dispatch-planning.md) | Primitive selection, context grouping, ownership map |
 | [`references/context-and-briefs.md`](references/context-and-briefs.md) | Compact context-pack and worker-brief templates |
 | [`references/execution-and-verification.md`](references/execution-and-verification.md) | Monitoring, escalation, synthesis, and evidence rules |
-| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot and quick model/effort routing matrix |
+| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot, routing matrix, and optional bounded CLI compatibility-bridge contract |
 | [`references/smoke-tests.md`](references/smoke-tests.md) | Three decision smokes for fresh-session validation |
 | [`NOTICE.md`](NOTICE.md) | Upstream source, pinned revision, and MIT attribution |
 
@@ -49,6 +50,8 @@ Start a fresh Hermes session, then load `baton-fanout-skill` before meaningful d
 Keep `SKILL.md`, `references/`, `LICENSE`, and `NOTICE.md` together when copying this bundle into another system's skill or instruction directory. Map generic primitives—main-agent work, one scout, bounded parallel workers, batches, worktrees, and centralized verification—to capabilities that actually exist in that runtime.
 
 This repository contains guidance, templates, and validation checks. It does not install an orchestrator or grant agents new permissions.
+
+An optional compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for security, review, release, live-operation, or credential work.
 
 ## Core decision
 

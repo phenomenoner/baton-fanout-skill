@@ -22,14 +22,27 @@ In this snapshot, Batch and Flex API rates are normally half the Standard rates,
 |---|---|---|---|---|
 | Deterministic extraction, classification, formatting, inventory, or repetitive transforms | `gpt-5.6-luna` | low | Instructions require interpretation or results conflict | `gpt-5.6-terra` low |
 | Repository search, documentation scan, log triage, large-file reading, or evidence collection | `gpt-5.6-terra` | low | Cross-source synthesis or subtle semantics appear | Terra medium, then Sol medium |
-| Clear bounded implementation with stable contracts and focused tests | `gpt-5.6-terra` | medium | Multiple modules, unclear behavior, or repeated test failure | Sol medium or high |
+| Clear bounded implementation with stable contracts and focused tests | `gpt-5.6-terra` | medium | Multiple modules, unclear behavior, or repeated test failure | Sol medium or high; optional verified Luna CLI bridge |
 | Conventional debugging with a known symptom and bounded evidence | `gpt-5.6-terra` | medium | Root cause crosses state, concurrency, identity, or security boundaries | Sol high |
 | Independent checklist review with objective acceptance criteria | `gpt-5.6-terra` | medium or high | Review requires ambiguity resolution or adversarial edge cases | Sol high |
 | Architecture, migration design, ambiguous diagnosis, or cross-cutting contract reasoning | `gpt-5.6-sol` | high | Contradictions remain after evidence review | Sol xhigh |
 | Security, authorization, destructive change, release judgment, or high-cost error analysis | `gpt-5.6-sol` | high or xhigh | Deeper reasoning is demonstrably useful | Sol max or ultra when exposed |
 | Final integration, contradiction resolution, and user-facing truth claims | Main agent | Current task setting | Do not outsource final judgment | One independent Sol review only when justified |
 
-If Luna is not exposed by the current runtime, use Terra low for its lane. Never invent or request an unavailable model slug.
+If Luna is not exposed by the current runtime, use Terra low for its lane or direct work by default. Never invent or request an unavailable model slug.
+
+## Optional CLI compatibility bridge
+
+A runtime-specific, verified wrapper may expose `gpt-5.6-luna` through Codex CLI when the native delegation schema does not. This is a compatibility bridge for one bounded implementation proposal, not a replacement for the runtime's delegation controls or an authority/capability escalation.
+
+Use it only after the dispatch brake selects one delegated worker and all of these are true:
+
+- the contract is stable, the owned target paths are exact, and no other worker may write them;
+- the local CLI has been verified to accept the requested model and effort; for example, Codex CLI 0.146 accepted `gpt-5.6-luna` with `model_reasoning_effort="max"`;
+- the worker is ephemeral, ignores user configuration, requires no approval, runs read-only, and returns a structured `apply_patch` proposal;
+- the main agent compares workspace state before and after, mechanically verifies both declared and actual patch paths, applies any accepted patch itself, and independently tests it.
+
+Do not send credentials, private receipts, connection profiles, or live configuration to the bridge. Do not use it for architecture, security, authorization, independent review, release or cutover judgment, live operations, or overlapping writes. Preserve an exposed native lane or direct work as the default fallback. `max` is exception-budgeted for a demonstrably clear bounded implementation; it is not the default Luna effort.
 
 ## Effort modifiers
 
