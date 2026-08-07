@@ -20,18 +20,26 @@ In this snapshot, Batch and Flex API rates are normally half the Standard rates,
 
 | Workstream | Default model | Effort | Escalate when | Fallback |
 |---|---|---|---|---|
-| Deterministic extraction, classification, formatting, inventory, or repetitive transforms | `gpt-5.6-luna` | low | Instructions require interpretation or results conflict | `gpt-5.6-terra` low |
+| Deterministic extraction, classification, formatting, inventory, or repetitive transforms | `gpt-5.6-luna` | max when the lane is verified and the result is cheap to falsify | Instructions require interpretation or results conflict | `gpt-5.6-terra` low or direct work |
 | Repository search, documentation scan, log triage, large-file reading, or evidence collection | `gpt-5.6-terra` | low | Cross-source synthesis or subtle semantics appear | Terra medium, then Sol medium |
-| Clear bounded implementation with stable contracts and focused tests | `gpt-5.6-terra` | medium | Multiple modules, unclear behavior, or repeated test failure | Sol medium or high; optional verified Luna CLI bridge |
+| stable, bounded code generation with exact target paths and mechanically verifiable acceptance | `gpt-5.6-luna` | max | The contract is incomplete, paths overlap, or judgment dominates | Direct work or an exposed Terra/Sol lane selected from evidence |
 | Conventional debugging with a known symptom and bounded evidence | `gpt-5.6-terra` | medium | Root cause crosses state, concurrency, identity, or security boundaries | Sol high |
-| Independent checklist review with objective acceptance criteria | `gpt-5.6-terra` | medium or high | Review requires ambiguity resolution or adversarial edge cases | Sol high |
+| Independent code, release, migration, or cutover review | At least `gpt-5.6-sol` | At least `high` | A clearly stronger reviewer lane is exposed above the working session | Use that stronger lane; at the runtime ceiling use the same top lane with fresh context |
 | Architecture, migration design, ambiguous diagnosis, or cross-cutting contract reasoning | `gpt-5.6-sol` | high | Contradictions remain after evidence review | Sol xhigh |
 | Security, authorization, destructive change, release judgment, or high-cost error analysis | `gpt-5.6-sol` | high or xhigh | Deeper reasoning is demonstrably useful | Sol max or ultra when exposed |
 | Final integration, contradiction resolution, and user-facing truth claims | Main agent | Current task setting | Do not outsource final judgment | One independent Sol review only when justified |
 
-If Luna is not exposed by the current runtime, use Terra low for its lane or direct work by default. Never invent or request an unavailable model slug.
+Luna/max is a first candidate only after Baton selects delegation for a stable, bounded task whose result is cheap to falsify. Native Luna may also serve deterministic extraction or inventory. The CLI compatibility bridge is narrower: it is code-generation-only and excludes exploratory scouting, search, diagnosis, architecture, security or authority decisions, independent review, release or cutover judgment, live operations, credentials, overlapping ownership, and incomplete contracts.
 
-## Optional CLI compatibility bridge
+If Luna is unavailable or ineligible, choose direct work or an exposed Terra/Sol lane from task evidence; do not invent an unavailable lane and do not treat Luna failure as an automatic Terra fallback.
+
+## Independent-review floor and relative strength
+
+Route an independent reviewer at no less than `gpt-5.6-sol` at `high` effort. When the live runtime exposes a reviewer lane that it clearly orders above the user session's working lane, use that stronger lane. Prefer a higher model tier, then higher effort within the same tier; do not pretend incomparable or unavailable routes form a reliable total order.
+
+If the working session is already at the runtime's strongest exposed lane, use the same top lane with fresh independent or adversarial context. This preserves genuine independence without making Sol/max a fixed default. If the current session's model or effort is not exposed, apply the Sol/high floor and state that relative-strength comparison could not be proven. Always keep the main agent's final judgment and never use Luna for independent review.
+
+## Codex CLI Luna compatibility bridge
 
 A runtime-specific, verified wrapper may expose `gpt-5.6-luna` through Codex CLI when the native delegation schema does not. This is a compatibility bridge for one bounded implementation proposal, not a replacement for the runtime's delegation controls or an authority/capability escalation.
 
@@ -42,7 +50,7 @@ Use it only after the dispatch brake selects one delegated worker and all of the
 - the worker is ephemeral, ignores user configuration, requires no approval, runs read-only, and returns a structured `apply_patch` proposal;
 - the main agent compares workspace state before and after, mechanically verifies both declared and actual patch paths, applies any accepted patch itself, and independently tests it.
 
-Do not send credentials, private receipts, connection profiles, or live configuration to the bridge. Do not use it for architecture, security, authorization, independent review, release or cutover judgment, live operations, or overlapping writes. Preserve an exposed native lane or direct work as the default fallback. `max` is exception-budgeted for a demonstrably clear bounded implementation; it is not the default Luna effort.
+Do not send credentials, private receipts, connection profiles, or live configuration to the bridge. Do not use it for exploratory scouting, architecture, security, authorization, independent review, release or cutover judgment, live operations, or overlapping writes. Preserve an exposed native lane or direct work as the fallback. For eligible stable code generation, `max` is the Luna effort default; it is not permission to broaden the task.
 
 Choose an expected bridge budget by task shape - about five minutes for one file or 15 minutes for a bounded cross-file proposal - and separately predeclare an outer hard timeout of up to 30 minutes. Judge continuation from the latest meaningful host-rendered task-WAL progress, not total elapsed time alone. The host may stream progress into a task WAL outside the read-only workspace for the main agent to inspect. That WAL is evidence only and grants the worker no new filesystem authority.
 
@@ -56,7 +64,7 @@ Require a parseable checkpoint or final proposal before late format-polish and r
 | `medium` | Ordinary exploration, implementation, and synthesis | A lower-effort lane already meets the contract |
 | `high` | Complex logic, competing hypotheses, reviewer work, or risky edge cases | The brief is incomplete or evidence is missing |
 | `xhigh` | Frontier work with real ambiguity or high-cost mistakes | Routine workers or broad fan-out |
-| `max` / `ultra` | Exceptional blocking judgment when supported and budgeted | Default routing or compensation for a defective brief |
+| `max` / `ultra` | Eligible Luna code generation at max, or exceptional blocking judgment when supported and budgeted | Compensation for a defective brief or an automatic review default |
 
 Higher effort increases latency and token use. First reduce unnecessary context, output volume, and duplicated reads; these often save more than a model downgrade alone.
 

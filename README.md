@@ -4,7 +4,7 @@
 [![Upstream Baton](https://img.shields.io/badge/upstream-cablate%2Fbaton-6f42c1)](https://github.com/cablate/baton)
 [![Skill](https://img.shields.io/badge/agent-skill-ready-2f855a)](SKILL.md)
 
-A portable agent skill for deciding **when fan-out earns its context, ownership, and verification cost**.
+A Codex-first agent skill for deciding **when fan-out earns its context, ownership, and verification cost**. This `codex/add-model-effort-routing` branch is the canonical Codex distribution; the default branch remains the portable/general bundle.
 
 > This is an independent, MIT-licensed derivative of [CabLate's Baton](https://github.com/cablate/baton), not an official CabLate release. Upstream attribution and the pinned source revision are recorded in [NOTICE.md](NOTICE.md).
 
@@ -17,8 +17,9 @@ Baton Fanout Skill adds a small decision gate before delegation:
 - **Dispatch less.** Keep small or tightly coupled work with the main agent.
 - **Group by context.** Split by source, artifact, dependency, and verification surface—not by bullet count.
 - **Own every write.** Give each writable artifact one owner and serialize shared contracts.
-- **Route intentionally.** Treat runtime defaults as fallbacks; select per-task model and reasoning effort when the platform supports it.
-- **Bridge narrowly.** When native delegation cannot expose a verified low-cost lane, an optional read-only CLI proposal bridge may be used for one stable, exclusively owned implementation task; the main agent still applies and verifies the patch.
+- **Route by task class.** After Baton approves delegation, try Luna/max first for stable, bounded code generation with exact target paths and mechanically verifiable acceptance.
+- **Review above the working lane.** Independent review starts at Sol/high and uses a clearly stronger exposed lane than the working session when available; at the runtime ceiling it uses the same top lane with fresh independent context.
+- **Bridge narrowly.** When native delegation cannot expose Luna, a read-only CLI proposal bridge may be used for one eligible, exclusively owned implementation task; the main agent still applies and verifies the patch.
 - **Stop blind retries.** Repair unclear briefs first and escalate by failure class instead of relaunching identical workers.
 - **Verify centrally.** Worker self-reports are inputs, not completion evidence.
 
@@ -26,15 +27,26 @@ Baton Fanout Skill adds a small decision gate before delegation:
 
 | Path | Purpose |
 |---|---|
-| [`SKILL.md`](SKILL.md) | Portable dispatch and fan-out governance skill |
+| [`SKILL.md`](SKILL.md) | Codex dispatch and fan-out governance skill |
+| [`references/codex-app.md`](references/codex-app.md) | Codex App/CLI collaboration-tool mapping and shared-workspace rules |
 | [`references/dispatch-planning.md`](references/dispatch-planning.md) | Primitive selection, context grouping, ownership map |
 | [`references/context-and-briefs.md`](references/context-and-briefs.md) | Compact context-pack and worker-brief templates |
 | [`references/execution-and-verification.md`](references/execution-and-verification.md) | Monitoring, escalation, synthesis, and evidence rules |
-| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot, routing matrix, and optional bounded CLI compatibility-bridge contract |
-| [`references/smoke-tests.md`](references/smoke-tests.md) | Three decision smokes for fresh-session validation |
+| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot, Luna/max codegen route, relative-strength review rule, and bounded CLI bridge contract |
+| [`references/smoke-tests.md`](references/smoke-tests.md) | Fan-out, Luna/bridge, and relative-strength review smokes for fresh-session validation |
 | [`NOTICE.md`](NOTICE.md) | Upstream source, pinned revision, and MIT attribution |
 
 ## Quick start
+
+### Codex App and CLI
+
+Ask Codex's built-in skill installer to install this exact branch:
+
+```text
+Install baton-fanout-skill from https://github.com/phenomenoner/baton-fanout-skill/tree/codex/add-model-effort-routing
+```
+
+Start a fresh Codex task after installation. Codex users should begin with [`references/codex-app.md`](references/codex-app.md), which maps Baton decisions to the actual collaboration tools, before consulting the portable planning references.
 
 ### Hermes Agent
 
@@ -43,7 +55,7 @@ git clone https://github.com/phenomenoner/baton-fanout-skill.git \
   ~/.hermes/skills/autonomous-ai-agents/baton-fanout-skill
 ```
 
-Start a fresh Hermes session, then load `baton-fanout-skill` before meaningful delegation or multi-surface fan-out. Run the three prompts in [`references/smoke-tests.md`](references/smoke-tests.md) after installation.
+Start a fresh Hermes session, then load `baton-fanout-skill` before meaningful delegation or multi-surface fan-out. Run the applicable decision and routing prompts in [`references/smoke-tests.md`](references/smoke-tests.md) after installation.
 
 ### Other agent systems
 
@@ -51,7 +63,7 @@ Keep `SKILL.md`, `references/`, `LICENSE`, and `NOTICE.md` together when copying
 
 This repository contains guidance, templates, and validation checks. It does not install an orchestrator or grant agents new permissions.
 
-An optional compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for security, review, release, live-operation, or credential work. The host may stream progress to a task WAL outside the workspace for inspection, but that evidence channel never grants the worker write authority. Use an expected task-shape budget and a separately predeclared hard timeout; judge intervention by latest meaningful WAL progress, require an emitted parseable checkpoint before late polish, and retain no unemitted patch at timeout.
+The compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for exploratory scouting, security, review, release, live-operation, or credential work. The host may stream progress to a task WAL outside the workspace for inspection, but that evidence channel never grants the worker write authority. Use an expected task-shape budget and a separately predeclared hard timeout; judge intervention by latest meaningful WAL progress, require an emitted parseable checkpoint before late polish, and retain no unemitted patch at timeout.
 
 ## Core decision
 

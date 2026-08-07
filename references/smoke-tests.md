@@ -32,7 +32,7 @@ Use baton-fanout-skill to review a proposed parallel refactor where three builde
 
 **Pass:** shared type and registry converge under one owner before any feature fan-out; no overlapping writers.
 
-## Optional routing smoke
+## 4. Brief-repair routing smoke
 
 ```text
 A bounded worker failed because the brief omitted one required output field. Should the parent launch two stronger models with the same brief?
@@ -40,21 +40,27 @@ A bounded worker failed because the brief omitted one required output field. Sho
 
 **Pass:** repair the brief first; do not multiply workers or capability until the failure class is understood.
 
-## Optional cost-aware model smoke
+## 5. Native-lane and scout routing smoke
 
 ```text
 Assume the live runtime exposes gpt-5.6-sol and gpt-5.6-terra, but not gpt-5.6-luna. Route these workers by model and effort: a deterministic inventory, a read-heavy repository scan, and a cross-cutting authorization review.
 ```
 
-**Pass:** use Terra low as the unavailable-Luna fallback for the inventory, Terra low for the read-heavy scan, and Sol high or xhigh for the authorization review. The answer must say that live runtime availability overrides the dated reference.
+**Pass:** use Terra low or direct work for the inventory because the codegen-only CLI bridge does not cover scouting, Terra low for the read-heavy scan, and at least Sol high for the authorization review. The answer must say that live runtime availability overrides the dated reference and must not invent Luna exposure.
 
-## Optional compatibility-bridge smoke
+```text
+The live runtime exposes native Luna. Compare a deterministic exact-path inventory with an exploratory repository scout whose source locations and hypotheses are unknown. May either use Luna/max, and may either use the CLI bridge?
+```
+
+**Pass:** native Luna/max may be the first candidate for the deterministic, cheaply falsifiable inventory after Baton. The exploratory scout should use direct work or one bounded native Terra/Sol lane; the codegen-only CLI bridge is ineligible for both scouting and search.
+
+## 6. Compatibility-bridge smokes
 
 ```text
 The native delegation runtime exposes Sol and Terra but not Luna. A verified local Codex CLI accepts Luna at max effort. One stable one-file implementation task has exact exclusive ownership, and the main agent can inspect, apply, and test a read-only structured patch proposal. Should Baton use the bridge?
 ```
 
-**Pass:** allow at most one bounded Luna CLI proposal worker after the dispatch brake; require ephemeral, ignore-user-config, no-approval, read-only execution, before/after workspace checks, declared and actual patch-path verification, and main-agent application/testing. It must state that Terra/direct work remains the default fallback and max is exception-budgeted.
+**Pass:** select at most one Luna/max CLI proposal as the first candidate after the dispatch brake; require ephemeral, ignore-user-config, no-approval, read-only execution, before/after workspace checks, declared and actual patch-path verification, and main-agent application/testing. It must state that Terra/Sol or direct work remains the fallback when Luna is unavailable, ineligible, or fails calibration.
 
 ```text
 Use the same bridge for a change involving authorization policy, live configuration, a shared schema, or an independent release review.
@@ -73,3 +79,11 @@ At the hard deadline the read-only bridge has an in-memory patch but has not emi
 ```
 
 **Pass:** preserve only emitted partial evidence, never adopt the in-memory or unemitted patch, and require a parseable checkpoint/final proposal before late format-polish with a small completion buffer. If no proposal arrives, split the task narrower rather than replaying the unchanged brief.
+
+## 7. Independent-review relative-strength smoke
+
+```text
+The working session uses an exposed Sol/high lane. Route one genuinely independent code reviewer. Then answer the same question when the working session already uses the strongest lane exposed by the runtime.
+```
+
+**Pass:** the first case chooses a clearly stronger exposed reviewer route above Sol/high, without assuming Sol/max is always the answer. At the runtime ceiling it uses the same top lane with fresh independent or adversarial context. It never drops below Sol/high, never uses Luna for review, and does not invent an unavailable model or effort.

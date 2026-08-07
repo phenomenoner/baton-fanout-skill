@@ -1,0 +1,4 @@
+interface:
+  display_name: "Baton Fanout"
+  short_description: "Govern safe, efficient Codex subagent dispatch"
+  default_prompt: "Use $baton-fanout-skill to choose and govern the smallest reliable Codex subagent workflow for this task."

@@ -21,6 +21,8 @@ REQUIRED = [
     ROOT / "references" / "execution-and-verification.md",
     ROOT / "references" / "model-and-effort-routing.md",
     ROOT / "references" / "smoke-tests.md",
+    ROOT / "references" / "codex-app.md",
+    ROOT / "agents" / "openai.yaml",
 ]
 
 
@@ -44,12 +46,12 @@ def main() -> int:
     if frontmatter.get("name") != "baton-fanout-skill":
         raise SystemExit("frontmatter name must be baton-fanout-skill")
     description = frontmatter.get("description")
-    if not isinstance(description, str) or not description.startswith("Use before"):
-        raise SystemExit("description must be a routing trigger beginning with 'Use before'")
+    if not isinstance(description, str) or not description.strip():
+        raise SystemExit("description must be a non-empty routing trigger")
     if len(description) > 1024:
         raise SystemExit("description exceeds 1024 characters")
-    if frontmatter.get("license") != "MIT":
-        raise SystemExit("frontmatter license must be MIT")
+    if set(frontmatter) != {"name", "description"}:
+        raise SystemExit("frontmatter must contain only Codex-supported name and description keys")
     if not body:
         raise SystemExit("SKILL.md body must not be empty")
     if len(content) > 100_000:

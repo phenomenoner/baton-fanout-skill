@@ -43,6 +43,8 @@ class PublicBundleTests(unittest.TestCase):
             "references/execution-and-verification.md",
             "references/model-and-effort-routing.md",
             "references/smoke-tests.md",
+            "references/codex-app.md",
+            "agents/openai.yaml",
         ):
             self.assertTrue((ROOT / rel).is_file(), rel)
 
@@ -54,9 +56,18 @@ class PublicBundleTests(unittest.TestCase):
             "gpt-5.6-sol",
             "gpt-5.6-terra",
             "gpt-5.6-luna",
+            "first candidate",
+            "stable, bounded code generation",
+            "exact target paths",
+            "mechanically verifiable",
+            "never use Luna for independent review",
+            "gpt-5.6-sol` at `high",
+            "above the user session's working lane",
+            "fresh independent or adversarial context",
+            "do not invent an unavailable lane",
             "2026-08-01",
             "relative cost proxy",
-            "Optional CLI compatibility bridge",
+            "Codex CLI Luna compatibility bridge",
             "read-only",
             "main agent",
             "actual patch paths",
@@ -70,6 +81,50 @@ class PublicBundleTests(unittest.TestCase):
             "https://developers.openai.com/api/docs/changelog",
         ):
             self.assertIn(required, routing)
+
+    def test_codex_distribution_points_to_codex_primitives_first(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        adapter = (ROOT / "references" / "codex-app.md").read_text(encoding="utf-8")
+        openai = (ROOT / "agents" / "openai.yaml").read_text(encoding="utf-8")
+        for required in (
+            "Baton Fanout for Codex",
+            "references/codex-app.md",
+            "references/model-and-effort-routing.md",
+        ):
+            self.assertIn(required, skill)
+        for required in (
+            "spawn_agent",
+            "send_message",
+            "followup_task",
+            "wait_agent",
+            "interrupt_agent",
+            "list_agents",
+        ):
+            self.assertIn(required, adapter)
+        self.assertIn("$baton-fanout-skill", openai)
+
+    def test_material_update_smokes_cover_native_bridge_scout_and_review_routes(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        smokes = (ROOT / "references" / "smoke-tests.md").read_text(encoding="utf-8")
+        self.assertIn("decision and routing cases", skill)
+        for required in (
+            "live runtime exposes native Luna",
+            "exploratory repository scout",
+            "codegen-only CLI bridge is ineligible",
+            "working session uses an exposed Sol/high lane",
+            "same top lane with fresh independent or adversarial context",
+        ):
+            self.assertIn(required, smokes)
+
+    def test_skill_frontmatter_uses_codex_supported_keys_only(self) -> None:
+        skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+        frontmatter_text = skill.split("---", 2)[1]
+        keys = {
+            line.split(":", 1)[0]
+            for line in frontmatter_text.splitlines()
+            if line and not line.startswith((" ", "\t"))
+        }
+        self.assertEqual({"name", "description"}, keys)
 
     def test_no_machine_specific_home_paths(self) -> None:
         text = public_text_bundle()
@@ -118,7 +173,7 @@ class PublicBundleTests(unittest.TestCase):
     def test_readme_describes_a_narrow_compatibility_bridge(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         for required in (
-            "optional read-only CLI proposal bridge",
+            "read-only CLI proposal bridge",
             "runtime-specific guidance",
             "The main agent verifies actual paths",
             "task WAL outside the workspace",
@@ -127,6 +182,15 @@ class PublicBundleTests(unittest.TestCase):
             "retain no unemitted patch at timeout",
         ):
             self.assertIn(required, readme)
+
+    def test_readme_leads_codex_users_to_the_codex_branch(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        codex = readme.index("### Codex App and CLI")
+        hermes = readme.index("### Hermes Agent")
+        self.assertLess(codex, hermes)
+        self.assertIn("codex/add-model-effort-routing", readme)
+        self.assertIn("Sol/high", readme)
+        self.assertIn("Luna/max", readme)
 
 
 if __name__ == "__main__":
