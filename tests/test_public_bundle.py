@@ -84,7 +84,7 @@ class PublicBundleTests(unittest.TestCase):
         adapter = (ROOT / "references" / "codex-app.md").read_text(encoding="utf-8")
         openai = (ROOT / "agents" / "openai.yaml").read_text(encoding="utf-8")
         for required in (
-            "Baton Fanout for Codex",
+            "Baton Fanout Governance",
             "references/codex-app.md",
             "references/model-and-effort-routing.md",
         ):
@@ -113,7 +113,7 @@ class PublicBundleTests(unittest.TestCase):
         ):
             self.assertIn(required, smokes)
 
-    def test_skill_frontmatter_uses_codex_supported_keys_only(self) -> None:
+    def test_skill_frontmatter_preserves_portable_metadata(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         frontmatter_text = skill.split("---", 2)[1]
         keys = {
@@ -121,7 +121,10 @@ class PublicBundleTests(unittest.TestCase):
             for line in frontmatter_text.splitlines()
             if line and not line.startswith((" ", "\t"))
         }
-        self.assertEqual({"name", "description"}, keys)
+        self.assertEqual(
+            {"name", "description", "license", "metadata"},
+            keys,
+        )
 
     def test_no_machine_specific_home_paths(self) -> None:
         text = public_text_bundle()
@@ -177,12 +180,12 @@ class PublicBundleTests(unittest.TestCase):
             self.assertIn(required, readme)
         self.assertNotIn("codex-cli-luna-worker", readme)
 
-    def test_readme_leads_codex_users_to_the_codex_branch(self) -> None:
+    def test_readme_leads_codex_users_to_the_canonical_repo(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         codex = readme.index("### Codex App and CLI")
         hermes = readme.index("### Hermes Agent")
         self.assertLess(codex, hermes)
-        self.assertIn("codex/add-model-effort-routing", readme)
+        self.assertIn("https://github.com/phenomenoner/baton-fanout-skill", readme)
         self.assertIn("Sol/high", readme)
         self.assertIn("Luna/max", readme)
 

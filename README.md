@@ -4,7 +4,7 @@
 [![Upstream Baton](https://img.shields.io/badge/upstream-cablate%2Fbaton-6f42c1)](https://github.com/cablate/baton)
 [![Skill](https://img.shields.io/badge/agent-skill-ready-2f855a)](SKILL.md)
 
-A Codex-first agent skill for deciding **when fan-out earns its context, ownership, and verification cost**. This `codex/add-model-effort-routing` branch is the canonical Codex distribution; the default branch remains the portable/general bundle.
+A portable agent skill for deciding **when fan-out earns its context, ownership, and verification cost**, with a Codex adapter for native OpenAI GPT-5.6 model and reasoning-effort routing.
 
 > This is an independent, MIT-licensed derivative of [CabLate's Baton](https://github.com/cablate/baton), not an official CabLate release. Upstream attribution and the pinned source revision are recorded in [NOTICE.md](NOTICE.md).
 
@@ -27,7 +27,7 @@ Baton Fanout Skill adds a small decision gate before delegation:
 
 | Path | Purpose |
 |---|---|
-| [`SKILL.md`](SKILL.md) | Codex dispatch and fan-out governance skill |
+| [`SKILL.md`](SKILL.md) | Portable dispatch and fan-out governance skill |
 | [`references/codex-app.md`](references/codex-app.md) | Codex App/CLI collaboration-tool mapping and shared-workspace rules |
 | [`references/dispatch-planning.md`](references/dispatch-planning.md) | Primitive selection, context grouping, ownership map |
 | [`references/context-and-briefs.md`](references/context-and-briefs.md) | Compact context-pack and worker-brief templates |
@@ -40,10 +40,10 @@ Baton Fanout Skill adds a small decision gate before delegation:
 
 ### Codex App and CLI
 
-Ask Codex's built-in skill installer to install this exact branch:
+Ask Codex's built-in skill installer to install the canonical repository:
 
 ```text
-Install baton-fanout-skill from https://github.com/phenomenoner/baton-fanout-skill/tree/codex/add-model-effort-routing
+Install baton-fanout-skill from https://github.com/phenomenoner/baton-fanout-skill
 ```
 
 Start a fresh Codex task after installation. Codex users should begin with [`references/codex-app.md`](references/codex-app.md), which maps Baton decisions to the actual collaboration tools, before consulting the portable planning references.

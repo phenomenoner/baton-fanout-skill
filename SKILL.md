@@ -1,9 +1,17 @@
 ---
 name: baton-fanout-skill
-description: Govern Codex native subagent dispatch and fan-out. Must be used before the main agent starts any subagent, whether delegation is user-requested or autonomously selected, and for parallel workers, multi-agent review, batch fan-out, or shared-workspace builders. Select the smallest reliable execution shape, route each worker with explicit model and reasoning-effort overrides when appropriate, enforce exclusive write ownership and bounded context, calibrate worker complexity from evidence, and keep synthesis and verification with the main agent. Do not use for user-owned task or thread management, or when work stays entirely with the main agent.
+description: Govern subagent dispatch and fan-out across agent runtimes. Use before meaningful delegation, parallel workers, multi-agent review, batches, worktrees, or shared-workspace builders. Select the smallest reliable execution shape, enforce exclusive write ownership and bounded context, calibrate worker complexity from evidence, and keep synthesis and verification with the main agent. When Codex exposes OpenAI GPT-5.6 per-spawn overrides, apply the task-class model and effort adapter. Do not use for user-owned task management or work that stays entirely with the main agent.
+license: MIT
+metadata:
+  version: "1.1.0"
+  author: CabLate upstream; fan-out adaptation by phenomenoner
+  hermes:
+    tags: [delegation, fanout, orchestration, subagents, context-economy, ownership, verification]
+    related_skills: []
+    homepage: https://github.com/phenomenoner/baton-fanout-skill
 ---
 
-# Baton Fanout for Codex
+# Baton Fanout Governance
 
 > **Dispatch less. Deliver more.**
 >
@@ -11,15 +19,15 @@ description: Govern Codex native subagent dispatch and fan-out. Must be used bef
 
 ## Overview
 
-Apply this skill before spawning Codex subagents. It decides whether delegation earns its coordination cost and, if so, chooses the smallest reliable execution shape and native model/effort route.
+Apply this skill before spawning subagents, opening worktrees, scaling a workflow, or splitting a task across multiple sources or artifacts. It decides whether delegation earns its coordination cost and, if so, chooses the smallest reliable execution shape.
 
 It is advisory. The current user request, live runtime/tool schema, security and approval boundaries, and repository-local contracts take precedence. This skill does not change models, permissions, files, or schedules by itself.
 
-## Start with Codex-native tools
+## Runtime adapters
 
-Read `references/codex-app.md` before mapping a plan to tools. Use Codex collaboration agents for agent-owned subtasks; do not create user-owned App tasks or shell out to `codex exec` as a substitute.
+Use the live runtime schema as authority. Codex users must read `references/codex-app.md` before mapping a plan to tools; use native collaboration agents for agent-owned subtasks, not user-owned App tasks or nested `codex exec` workers. Other runtimes should map Baton's generic primitives to their own supported delegation tools and ignore Codex-only fields.
 
-Use `references/model-and-effort-routing.md` after the dispatch brake. Native Luna/max is the first candidate when a stable, bounded, cheaply falsifiable task needs no more judgment than Terra/high, especially exact-target code generation and low-judgment scouts. Pass the route directly to `spawn_agent`; if the live schema does not expose the requested route, use direct work or another exposed native lane selected from evidence. Independent review has a different route: never use Luna for independent review, and do not turn Sol/max into an unconditional default.
+When Codex exposes the OpenAI GPT-5.6 family and native per-spawn overrides, use `references/model-and-effort-routing.md` after the dispatch brake. Luna/max is the first candidate when a stable, bounded, cheaply falsifiable task needs no more judgment than Terra/high, especially exact-target code generation and low-judgment scouts. Pass the route directly to `spawn_agent`; if the live schema does not expose it, use direct work or another exposed native lane selected from evidence. Independent review has a different route: never use Luna for independent review, and do not turn Sol/max into an unconditional default.
 
 ## When to use
 

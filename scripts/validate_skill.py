@@ -50,8 +50,10 @@ def main() -> int:
         raise SystemExit("description must be a non-empty routing trigger")
     if len(description) > 1024:
         raise SystemExit("description exceeds 1024 characters")
-    if set(frontmatter) != {"name", "description"}:
-        raise SystemExit("frontmatter must contain only Codex-supported name and description keys")
+    required = {"name", "description"}
+    allowed = required | {"license", "metadata"}
+    if not required.issubset(frontmatter) or not set(frontmatter).issubset(allowed):
+        raise SystemExit("frontmatter must contain required routing keys and only supported portable metadata")
     if not body:
         raise SystemExit("SKILL.md body must not be empty")
     if len(content) > 100_000:

@@ -4,6 +4,10 @@ All notable changes to Baton Fanout Skill are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Unified the portable Baton core and the Codex adapter on the default branch. GPT-5.6 model/effort routing is explicitly conditional on the Codex runtime exposing those native lanes and per-spawn overrides.
+
 ### Added
 
 - Codex-first distribution surface with a dedicated collaboration-tool adapter and `agents/openai.yaml` metadata, so Codex users reach the runtime-specific primitives before portable guidance.
