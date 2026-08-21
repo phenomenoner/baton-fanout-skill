@@ -19,7 +19,7 @@ Baton Fanout Skill adds a small decision gate before delegation:
 - **Own every write.** Give each writable artifact one owner and serialize shared contracts.
 - **Route by task class.** After Baton approves delegation, try Luna/max first for stable, bounded code generation with exact target paths and mechanically verifiable acceptance.
 - **Review above the working lane.** Independent review starts at Sol/high and uses a clearly stronger exposed lane than the working session when available; at the runtime ceiling it uses the same top lane with fresh independent context.
-- **Bridge narrowly.** When native delegation cannot expose Luna, a read-only CLI proposal bridge may be used for one eligible, exclusively owned implementation task; the main agent still applies and verifies the patch.
+- **Use native overrides.** Pass task-class `model` and `reasoning_effort` values directly to native subagents instead of starting a nested Codex CLI worker.
 - **Stop blind retries.** Repair unclear briefs first and escalate by failure class instead of relaunching identical workers.
 - **Verify centrally.** Worker self-reports are inputs, not completion evidence.
 
@@ -32,8 +32,8 @@ Baton Fanout Skill adds a small decision gate before delegation:
 | [`references/dispatch-planning.md`](references/dispatch-planning.md) | Primitive selection, context grouping, ownership map |
 | [`references/context-and-briefs.md`](references/context-and-briefs.md) | Compact context-pack and worker-brief templates |
 | [`references/execution-and-verification.md`](references/execution-and-verification.md) | Monitoring, escalation, synthesis, and evidence rules |
-| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot, Luna/max codegen route, relative-strength review rule, and bounded CLI bridge contract |
-| [`references/smoke-tests.md`](references/smoke-tests.md) | Fan-out, Luna/bridge, and relative-strength review smokes for fresh-session validation |
+| [`references/model-and-effort-routing.md`](references/model-and-effort-routing.md) | Dated GPT-5.6 cost snapshot, native Luna/max routing, and relative-strength review rule |
+| [`references/smoke-tests.md`](references/smoke-tests.md) | Fan-out, native model/effort, and relative-strength review smokes for fresh-session validation |
 | [`NOTICE.md`](NOTICE.md) | Upstream source, pinned revision, and MIT attribution |
 
 ## Quick start
@@ -63,7 +63,7 @@ Keep `SKILL.md`, `references/`, `LICENSE`, and `NOTICE.md` together when copying
 
 This repository contains guidance, templates, and validation checks. It does not install an orchestrator or grant agents new permissions.
 
-The compatibility bridge is runtime-specific guidance, not a bundled executable. It may only run an ephemeral, no-approval, read-only worker that produces a structured patch proposal after Baton has selected one bounded delegation. The main agent verifies actual paths, applies accepted changes, and tests them; the bridge never grants authority for exploratory scouting, security, review, release, live-operation, or credential work. The host may stream progress to a task WAL outside the workspace for inspection, but that evidence channel never grants the worker write authority. Use an expected task-shape budget and a separately predeclared hard timeout; judge intervention by latest meaningful WAL progress, require an emitted parseable checkpoint before late polish, and retain no unemitted patch at timeout.
+Codex supports global spawned-agent defaults and explicit per-spawn model and reasoning-effort overrides. Baton uses the explicit native route when task classification matters and treats global defaults only as omission fallbacks. Exact-target code generation and low-judgment bounded scouts normally start with Luna/max when the live schema exposes it; judgment-heavy work stays on an appropriate Terra or Sol lane.
 
 ## Core decision
 

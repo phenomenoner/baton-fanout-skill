@@ -11,9 +11,12 @@ All notable changes to Baton Fanout Skill are documented here.
 - Independent-review routing floor of Sol/high plus a relative-strength rule: use a clearly stronger exposed lane than the working session when possible, or the same runtime-ceiling lane with fresh adversarial context.
 - Dated GPT-5.6 model and reasoning-effort routing reference with current Sol, Terra, and Luna cost ratios, live-capability fallbacks, and escalation rules.
 - Validation coverage that requires the routing reference, official pricing sources, and refresh metadata.
-- Optional, runtime-specific Codex CLI compatibility-bridge guidance for a verified Luna implementation lane when native delegation cannot expose it; the bridge stays read-only, proposal-only, and under main-agent integration and verification.
-- Adaptive compatibility-bridge budget and observable-progress guidance: host-rendered task WALs remain outside the read-only workspace and evidence-only, while stalled work, scope drift, or exhausted budgets trigger intervention.
-- Expected-budget versus hard-timeout guidance for compatibility bridges, including latest-WAL-progress intervention, parseable checkpoint emission before late polish, completion buffers, timeout evidence retention, and narrower retry boundaries.
+- Native per-spawn model and reasoning-effort routing, including the explicit-override versus full-history inheritance boundary.
+- Luna/max routing for stable exact-target code generation and bounded low-judgment scouts whose expected judgment need is no greater than Terra/high.
+
+### Removed
+
+- The Codex CLI Luna compatibility bridge and its wrapper-specific timeout/WAL rules, superseded by native subagent model and effort overrides.
 
 ## [1.0.0] - 2026-08-01
 

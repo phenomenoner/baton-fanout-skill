@@ -21,15 +21,15 @@ In this snapshot, Batch and Flex API rates are normally half the Standard rates,
 | Workstream | Default model | Effort | Escalate when | Fallback |
 |---|---|---|---|---|
 | Deterministic extraction, classification, formatting, inventory, or repetitive transforms | `gpt-5.6-luna` | max when the lane is verified and the result is cheap to falsify | Instructions require interpretation or results conflict | `gpt-5.6-terra` low or direct work |
-| Repository search, documentation scan, log triage, large-file reading, or evidence collection | `gpt-5.6-terra` | low | Cross-source synthesis or subtle semantics appear | Terra medium, then Sol medium |
-| stable, bounded code generation with exact target paths and mechanically verifiable acceptance | `gpt-5.6-luna` | max | The contract is incomplete, paths overlap, or judgment dominates | Direct work or an exposed Terra/Sol lane selected from evidence |
+| Bounded low-judgment scout, repository inventory, documentation scan, log triage, or evidence collection with an exact output contract | `gpt-5.6-luna` | max | Source locations, hypotheses, or semantics require material interpretation | Terra low/high as needed, then Sol medium |
+| Stable, bounded code generation with exact target paths and mechanically verifiable acceptance | `gpt-5.6-luna` | max | The contract is incomplete, paths overlap, or judgment dominates | Direct work or an exposed Terra/Sol lane selected from evidence |
 | Conventional debugging with a known symptom and bounded evidence | `gpt-5.6-terra` | medium | Root cause crosses state, concurrency, identity, or security boundaries | Sol high |
 | Independent code, release, migration, or cutover review | At least `gpt-5.6-sol` | At least `high` | A clearly stronger reviewer lane is exposed above the working session | Use that stronger lane; at the runtime ceiling use the same top lane with fresh context |
 | Architecture, migration design, ambiguous diagnosis, or cross-cutting contract reasoning | `gpt-5.6-sol` | high | Contradictions remain after evidence review | Sol xhigh |
 | Security, authorization, destructive change, release judgment, or high-cost error analysis | `gpt-5.6-sol` | high or xhigh | Deeper reasoning is demonstrably useful | Sol max or ultra when exposed |
 | Final integration, contradiction resolution, and user-facing truth claims | Main agent | Current task setting | Do not outsource final judgment | One independent Sol review only when justified |
 
-Luna/max is a first candidate only after Baton selects delegation for a stable, bounded task whose result is cheap to falsify. Native Luna may also serve deterministic extraction or inventory. The CLI compatibility bridge is narrower: it is code-generation-only and excludes exploratory scouting, search, diagnosis, architecture, security or authority decisions, independent review, release or cutover judgment, live operations, credentials, overlapping ownership, and incomplete contracts.
+Luna/max is the first native candidate only after Baton selects delegation for a stable, bounded task whose result is cheap to falsify and whose expected judgment need is no greater than Terra/high. This includes exact-target code generation and low-judgment scouts with an explicit evidence/output contract. Exploratory scouting with unknown source locations or hypotheses, ambiguous diagnosis, architecture, security or authority decisions, independent review, release or cutover judgment, live operations, credentials, overlapping ownership, and incomplete contracts stay with direct work or an appropriate native Terra/Sol lane.
 
 If Luna is unavailable or ineligible, choose direct work or an exposed Terra/Sol lane from task evidence; do not invent an unavailable lane and do not treat Luna failure as an automatic Terra fallback.
 
@@ -39,22 +39,11 @@ Route an independent reviewer at no less than `gpt-5.6-sol` at `high` effort. Wh
 
 If the working session is already at the runtime's strongest exposed lane, use the same top lane with fresh independent or adversarial context. This preserves genuine independence without making Sol/max a fixed default. If the current session's model or effort is not exposed, apply the Sol/high floor and state that relative-strength comparison could not be proven. Always keep the main agent's final judgment and never use Luna for independent review.
 
-## Codex CLI Luna compatibility bridge
+## Native spawn override contract
 
-A runtime-specific, verified wrapper may expose `gpt-5.6-luna` through Codex CLI when the native delegation schema does not. This is a compatibility bridge for one bounded implementation proposal, not a replacement for the runtime's delegation controls or an authority/capability escalation.
+Codex supports global `[agents]` defaults and explicit per-spawn model and reasoning-effort values. Use `spawn_agent` with `model: "gpt-5.6-luna"` and `reasoning_effort: "max"` for an eligible Luna task. Explicit spawn values take precedence over global defaults, so keep install-wide defaults neutral unless most omitted routes genuinely share one class.
 
-Use it only after the dispatch brake selects one delegated worker and all of these are true:
-
-- the contract is stable, the owned target paths are exact, and no other worker may write them;
-- the local CLI has been verified to accept the requested model and effort; for example, Codex CLI 0.146 accepted `gpt-5.6-luna` with `model_reasoning_effort="max"`;
-- the worker is ephemeral, ignores user configuration, requires no approval, runs read-only, and returns a structured `apply_patch` proposal;
-- the main agent compares workspace state before and after, mechanically verifies both declared and actual patch paths, applies any accepted patch itself, and independently tests it.
-
-Do not send credentials, private receipts, connection profiles, or live configuration to the bridge. Do not use it for exploratory scouting, architecture, security, authorization, independent review, release or cutover judgment, live operations, or overlapping writes. Preserve an exposed native lane or direct work as the fallback. For eligible stable code generation, `max` is the Luna effort default; it is not permission to broaden the task.
-
-Choose an expected bridge budget by task shape - about five minutes for one file or 15 minutes for a bounded cross-file proposal - and separately predeclare an outer hard timeout of up to 30 minutes. Judge continuation from the latest meaningful host-rendered task-WAL progress, not total elapsed time alone. The host may stream progress into a task WAL outside the read-only workspace for the main agent to inspect. That WAL is evidence only and grants the worker no new filesystem authority.
-
-Require a parseable checkpoint or final proposal before late format-polish and reserve a small completion buffer before the hard deadline. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion. Prolonged work may continue only within the predeclared bounded maximum while progress advances. At the outer timeout preserve only emitted partial evidence; never adopt an in-memory or unemitted patch. If no proposal arrives, split the task narrower rather than replaying the unchanged brief.
+The live collaboration schema controls context-fork compatibility. In the current Codex App schema, explicit model/effort overrides require `fork_turns="none"` or a bounded positive recent-turn fork; a full-history fork inherits the parent route and does not accept overrides. Prefer a self-contained brief and the smallest useful fork. Never shell out to `codex exec` merely to obtain a worker route already exposed by native subagents.
 
 ## Effort modifiers
 
@@ -80,6 +69,8 @@ Do not launch duplicate stronger workers with the same defective brief. Sample a
 
 ## Refresh sources
 
+- Codex subagent configuration and precedence: https://learn.chatgpt.com/docs/agent-configuration/subagents
+- Codex `[agents]` configuration keys: https://learn.chatgpt.com/docs/config-file/config-reference
 - Model selection guidance: https://developers.openai.com/tracks/building-agents#how-to-choose
 - Current prices: https://developers.openai.com/api/docs/pricing
 - Price-change date and percentages: https://developers.openai.com/api/docs/changelog

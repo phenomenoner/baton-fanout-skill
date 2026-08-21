@@ -18,7 +18,6 @@ Evaluate blockers before benefits:
 
 - **Main agent:** small work, tightly coupled reasoning, final decisions, or synthesis.
 - **One worker:** bounded scouting, isolated source research, independent review; read-only by default.
-- **CLI proposal worker:** one bounded implementation proposal only when a verified runtime-specific compatibility bridge is needed; keep the workspace read-only and let the main agent apply and verify the patch.
 - **Parallel workers:** only a small number of mutually exclusive source or artifact surfaces.
 - **Batch/workflow:** homogeneous items with deterministic mapping, retries, and a stop rule; begin with a sample.
 - **Worktree/branch:** competing approaches or overlapping writes that need isolation; require explicit scope and a verified base.
@@ -44,16 +43,6 @@ For every write dispatch, fill this before launch:
 |---|---|---|---|---|---|
 
 Shared schemas, registries, indexes, generated outputs, configuration, and lockfiles are high-risk. Converge them first or assign one integration owner.
-
-## Compatibility-bridge proposal contract
-
-Treat a CLI proposal worker as delegated work, not a way around the dispatch brake. Before launch, record exact allowed target paths, the baseline workspace snapshot, permitted read-only checks, structured result fields, the expected budget, a bounded outer hard timeout, and the main-agent integration owner. Require an ephemeral, no-approval, read-only worker that ignores user configuration. Verify its post-run workspace snapshot and parse the actual patch paths as well as declared target paths before the main agent applies any proposal.
-
-Choose about five minutes for one file or 15 minutes for a bounded cross-file proposal as the expected budget, with a separately predeclared outer hard timeout of up to 30 minutes. Have the host render streamed progress to a task WAL outside the read-only workspace; the main agent may inspect it, but the WAL is not a worker write capability or new filesystem authority. Judge intervention from the latest meaningful host-rendered WAL progress, not total elapsed time alone. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion. A prolonged task may continue only within the predeclared maximum while progress advances.
-
-Require the worker to emit a parseable checkpoint or final proposal before late format-polish and reserve a small completion buffer before the hard deadline. At the outer timeout keep only emitted partial evidence; never adopt an in-memory or unemitted patch. If no proposal arrives, split the task narrower instead of replaying an unchanged brief.
-
-Do not route unresolved contracts, shared schemas or lockfiles, security or authority work, independent review, releases, cutovers, live operations, or credentials through a compatibility bridge. If its runtime support is absent or the brief fails twice for the same cause, use an exposed lane or direct work instead.
 
 ## Dispatch plan template
 

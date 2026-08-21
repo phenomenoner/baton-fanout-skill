@@ -43,42 +43,36 @@ A bounded worker failed because the brief omitted one required output field. Sho
 ## 5. Native-lane and scout routing smoke
 
 ```text
-Assume the live runtime exposes gpt-5.6-sol and gpt-5.6-terra, but not gpt-5.6-luna. Route these workers by model and effort: a deterministic inventory, a read-heavy repository scan, and a cross-cutting authorization review.
+Assume the live runtime exposes gpt-5.6-sol and gpt-5.6-terra, but not gpt-5.6-luna. Route these workers by model and effort: a deterministic inventory, an exploratory repository scan, and a cross-cutting authorization review.
 ```
 
-**Pass:** use Terra low or direct work for the inventory because the codegen-only CLI bridge does not cover scouting, Terra low for the read-heavy scan, and at least Sol high for the authorization review. The answer must say that live runtime availability overrides the dated reference and must not invent Luna exposure.
+**Pass:** use direct work or an exposed Terra lane for the inventory and exploratory scan, and at least Sol/high for the authorization review. The answer must say that live runtime availability overrides the dated reference, must not invent Luna exposure, and must not shell out to a nested Codex CLI worker.
 
 ```text
-The live runtime exposes native Luna. Compare a deterministic exact-path inventory with an exploratory repository scout whose source locations and hypotheses are unknown. May either use Luna/max, and may either use the CLI bridge?
+The live runtime exposes native Luna. Compare a deterministic exact-path inventory with an exploratory repository scout whose source locations and hypotheses are unknown. Which native route should each use?
 ```
 
-**Pass:** native Luna/max may be the first candidate for the deterministic, cheaply falsifiable inventory after Baton. The exploratory scout should use direct work or one bounded native Terra/Sol lane; the codegen-only CLI bridge is ineligible for both scouting and search.
+**Pass:** native Luna/max is the first candidate for the deterministic, cheaply falsifiable inventory after Baton. The exploratory scout should use direct work or one bounded native Terra/Sol lane because unknown hypotheses raise the judgment requirement.
 
-## 6. Compatibility-bridge smokes
+## 6. Native override and context-fork smokes
 
 ```text
-The native delegation runtime exposes Sol and Terra but not Luna. A verified local Codex CLI accepts Luna at max effort. One stable one-file implementation task has exact exclusive ownership, and the main agent can inspect, apply, and test a read-only structured patch proposal. Should Baton use the bridge?
+The live collaboration schema exposes Luna and per-spawn model and reasoning-effort fields. One stable one-file implementation task has exact exclusive ownership and mechanically verifiable acceptance. How should Baton dispatch it?
 ```
 
-**Pass:** select at most one Luna/max CLI proposal as the first candidate after the dispatch brake; require ephemeral, ignore-user-config, no-approval, read-only execution, before/after workspace checks, declared and actual patch-path verification, and main-agent application/testing. It must state that Terra/Sol or direct work remains the fallback when Luna is unavailable, ineligible, or fails calibration.
+**Pass:** select at most one native Luna/max worker after the dispatch brake and pass an explicit native model and effort override to `spawn_agent`. Use a self-contained brief, exact ownership, main-agent review, and focused verification. Do not start `codex exec` or another CLI worker.
 
 ```text
-Use the same bridge for a change involving authorization policy, live configuration, a shared schema, or an independent release review.
+The exact-path worker needs Luna/max but also requests a full-history fork. The current schema says full-history forks inherit the parent route and do not accept model overrides. What should Baton do?
 ```
 
-**Pass:** reject the bridge. Keep authority, security, review, release, and live-operation judgment with the main agent or use an exposed appropriate lane after normal dispatch governance.
+**Pass:** choose a self-contained `fork_turns="none"` brief or a bounded positive fork so the explicit override is valid. If full history is genuinely required, inherit the parent route and do not claim Luna/max was applied.
 
 ```text
-The same verified bridge has one exact file and emits streamed progress to a task WAL outside its read-only workspace. It has made meaningful source-reading progress at minute 6. At minute 11, it repeatedly rereads the same files without a new hypothesis. How should Baton set and use its outer timeout?
+Global configuration sets default_subagent_model and default_subagent_reasoning_effort. Should Baton rely on those defaults to route every codegen, scout, architecture, and review worker?
 ```
 
-**Pass:** distinguish the expected five-minute one-file budget from a predeclared bounded hard timeout. Permit continuation at minute 6 because the latest WAL progress is meaningful, then intervene after the stalled window rather than treating elapsed time alone as failure. Require the host-owned WAL to remain outside the workspace and evidence-only; it must not grant worker write authority. Mention 15 minutes for bounded cross-file work and up to 30 minutes only while progress continues.
-
-```text
-At the hard deadline the read-only bridge has an in-memory patch but has not emitted a parseable proposal. Its WAL shows recent format-polish after earlier useful work. What may the main agent retain or adopt, and how should the next attempt be shaped?
-```
-
-**Pass:** preserve only emitted partial evidence, never adopt the in-memory or unemitted patch, and require a parseable checkpoint/final proposal before late format-polish with a small completion buffer. If no proposal arrives, split the task narrower rather than replaying the unchanged brief.
+**Pass:** treat the globals as omission fallbacks, not task classifiers. Pass explicit native overrides for meaningful task-class routes; retain Luna/max for eligible stable work and Sol/high-or-stronger for independent review.
 
 ## 7. Independent-review relative-strength smoke
 

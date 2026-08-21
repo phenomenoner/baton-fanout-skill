@@ -56,8 +56,8 @@ class PublicBundleTests(unittest.TestCase):
             "gpt-5.6-sol",
             "gpt-5.6-terra",
             "gpt-5.6-luna",
-            "first candidate",
-            "stable, bounded code generation",
+            "first native candidate",
+            "Stable, bounded code generation",
             "exact target paths",
             "mechanically verifiable",
             "never use Luna for independent review",
@@ -67,16 +67,13 @@ class PublicBundleTests(unittest.TestCase):
             "do not invent an unavailable lane",
             "2026-08-01",
             "relative cost proxy",
-            "Codex CLI Luna compatibility bridge",
-            "read-only",
             "main agent",
-            "actual patch paths",
-            "task WAL outside the read-only workspace",
-            "no new filesystem authority",
-            "expected bridge budget",
-            "outer hard timeout",
-            "latest meaningful host-rendered task-WAL progress",
-            "never adopt an in-memory or unemitted patch",
+            "explicit",
+            "spawn_agent",
+            'fork_turns="none"',
+            "full-history fork",
+            "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+            "https://learn.chatgpt.com/docs/config-file/config-reference",
             "https://developers.openai.com/api/docs/pricing",
             "https://developers.openai.com/api/docs/changelog",
         ):
@@ -103,14 +100,14 @@ class PublicBundleTests(unittest.TestCase):
             self.assertIn(required, adapter)
         self.assertIn("$baton-fanout-skill", openai)
 
-    def test_material_update_smokes_cover_native_bridge_scout_and_review_routes(self) -> None:
+    def test_material_update_smokes_cover_native_scout_and_review_routes(self) -> None:
         skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         smokes = (ROOT / "references" / "smoke-tests.md").read_text(encoding="utf-8")
         self.assertIn("decision and routing cases", skill)
         for required in (
             "live runtime exposes native Luna",
             "exploratory repository scout",
-            "codegen-only CLI bridge is ineligible",
+            "explicit native model and effort override",
             "working session uses an exposed Sol/high lane",
             "same top lane with fresh independent or adversarial context",
         ):
@@ -170,18 +167,15 @@ class PublicBundleTests(unittest.TestCase):
         self.assertNotIn("## Tags", readme)
         self.assertNotRegex(readme, r"(?m)^#AIAgents\b")
 
-    def test_readme_describes_a_narrow_compatibility_bridge(self) -> None:
+    def test_readme_uses_native_subagent_routing(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         for required in (
-            "read-only CLI proposal bridge",
-            "runtime-specific guidance",
-            "The main agent verifies actual paths",
-            "task WAL outside the workspace",
-            "never grants the worker write authority",
-            "separately predeclared hard timeout",
-            "retain no unemitted patch at timeout",
+            "Use native overrides",
+            "explicit per-spawn model and reasoning-effort overrides",
+            "Luna/max",
         ):
             self.assertIn(required, readme)
+        self.assertNotIn("codex-cli-luna-worker", readme)
 
     def test_readme_leads_codex_users_to_the_codex_branch(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

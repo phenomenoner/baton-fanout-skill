@@ -24,7 +24,9 @@ Do not create, fork, or hand off a user-owned Codex App task to implement an int
 
 ## Model and effort
 
-Use `references/model-and-effort-routing.md`. Never request a model or effort that the live schema does not expose. A CLI bridge is delegated work and must also pass Baton's brake plus its own narrower skill contract.
+Use `references/model-and-effort-routing.md`. Pass `model` and `reasoning_effort` directly to `spawn_agent` when the task-class route should differ from inherited defaults. Official Codex settings also expose `[agents]` defaults, but explicit spawn values take precedence; treat defaults as omission fallbacks rather than task classifiers.
+
+In the current collaboration schema, model overrides require `fork_turns="none"` or a bounded positive recent-turn fork. A full-history fork inherits the parent model and effort and does not accept overrides. Keep the worker brief self-contained, use the smallest fork that supplies needed context, and never request a model or effort the live schema does not expose.
 
 ## Waiting
 

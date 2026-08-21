@@ -1,6 +1,6 @@
 ---
 name: baton-fanout-skill
-description: Govern Codex subagent dispatch, fan-out, and delegated compatibility workers such as read-only CLI bridges. Must be used before the main agent starts any such worker, whether delegation is user-requested or autonomously selected, and for parallel workers, multi-agent review, batch fan-out, or shared-workspace builders. Select the smallest reliable execution shape, enforce exclusive write ownership and bounded context, calibrate worker complexity from evidence, and keep synthesis and verification with the main agent. Do not use for user-owned task or thread management, or when work stays entirely with the main agent.
+description: Govern Codex native subagent dispatch and fan-out. Must be used before the main agent starts any subagent, whether delegation is user-requested or autonomously selected, and for parallel workers, multi-agent review, batch fan-out, or shared-workspace builders. Select the smallest reliable execution shape, route each worker with explicit model and reasoning-effort overrides when appropriate, enforce exclusive write ownership and bounded context, calibrate worker complexity from evidence, and keep synthesis and verification with the main agent. Do not use for user-owned task or thread management, or when work stays entirely with the main agent.
 ---
 
 # Baton Fanout for Codex
@@ -11,15 +11,15 @@ description: Govern Codex subagent dispatch, fan-out, and delegated compatibilit
 
 ## Overview
 
-Apply this skill before spawning Codex subagents or starting a delegated compatibility worker. It decides whether delegation earns its coordination cost and, if so, chooses the smallest reliable execution shape.
+Apply this skill before spawning Codex subagents. It decides whether delegation earns its coordination cost and, if so, chooses the smallest reliable execution shape and native model/effort route.
 
 It is advisory. The current user request, live runtime/tool schema, security and approval boundaries, and repository-local contracts take precedence. This skill does not change models, permissions, files, or schedules by itself.
 
 ## Start with Codex-native tools
 
-Read `references/codex-app.md` before mapping a plan to tools. Use Codex collaboration agents for agent-owned subtasks; do not create user-owned App tasks as a substitute. Treat CLI compatibility workers as delegated work even though they do not use the collaboration schema.
+Read `references/codex-app.md` before mapping a plan to tools. Use Codex collaboration agents for agent-owned subtasks; do not create user-owned App tasks or shell out to `codex exec` as a substitute.
 
-Use `references/model-and-effort-routing.md` after the dispatch brake. An exposed native Luna/max lane is the first candidate for deterministic, cheaply falsifiable delegated work. When native Luna is unavailable, its active compatibility skill separately gates the narrower CLI bridge for stable, bounded code generation with exact target paths and mechanically verifiable acceptance. Independent review has a different route: never use Luna for independent review, and do not turn Sol/max into an unconditional default.
+Use `references/model-and-effort-routing.md` after the dispatch brake. Native Luna/max is the first candidate when a stable, bounded, cheaply falsifiable task needs no more judgment than Terra/high, especially exact-target code generation and low-judgment scouts. Pass the route directly to `spawn_agent`; if the live schema does not expose the requested route, use direct work or another exposed native lane selected from evidence. Independent review has a different route: never use Luna for independent review, and do not turn Sol/max into an unconditional default.
 
 ## When to use
 
@@ -85,16 +85,12 @@ Read model routing, concurrency, role limits, safety, and tool capabilities from
 
 When per-task model or reasoning-effort overrides exist:
 
-- assign an intentional route to meaningful workers;
+- pass an intentional `model` and `reasoning_effort` route directly to each meaningful `spawn_agent` call;
 - treat install-wide delegation defaults as fallbacks for omissions, not as task classifiers;
 - start with the task-class route that has evidence of meeting the acceptance contract;
 - reserve frontier models or maximum effort for ambiguity, contradiction, high-cost errors, blocking final gates, or the explicitly bounded Luna/max task-class route above.
 
-When Luna is unavailable from the native delegation schema, evaluate the verified Codex CLI Luna bridge first for eligible stable code generation. Otherwise keep an exposed native lane or direct work. The bridge is allowed only after this skill selects one bounded delegation with stable contracts, exact exclusive target paths, mechanically verifiable acceptance, and a main-agent integration owner. It must be ephemeral, ignore user configuration, require no approval, run read-only, and return a structured `apply_patch` proposal. The main agent verifies declared and actual patch paths, applies an accepted proposal itself, and runs the checks.
-
-This bridge is not a new authority or capability. Do not use it for exploratory scouting, architecture, security, authorization, independent review, release or cutover judgment, live operations, credentials, incomplete contracts, or overlapping writes. For an eligible Luna code-generation proposal, use max effort so the cheaper worker has the best chance of producing a complete, reviewable artifact; this task-class default does not justify broader delegation.
-
-Choose an expected budget by task shape - about five minutes for one file or 15 minutes for a bounded cross-file proposal - and separately predeclare a bounded outer hard timeout of up to 30 minutes. Continue only while the latest meaningful host-rendered task-WAL progress advances; do not judge intervention from total elapsed time alone. Have the host stream that WAL outside the read-only workspace so the main agent can inspect it without granting the worker filesystem authority. Require a parseable checkpoint or final proposal before late format-polish, and reserve a small completion buffer before the hard deadline. Intervene on about five minutes without meaningful progress, repeated failed reads or hypotheses, scope drift, or budget exhaustion. At the hard timeout preserve only emitted partial evidence; never adopt an in-memory or unemitted patch. If no proposal arrives, split the task narrower instead of replaying the unchanged brief.
+Use a self-contained `fork_turns="none"` brief by default when setting explicit model/effort overrides; use a small positive fork only when recent conversation is material. In runtimes where a full-history fork inherits the parent lane and rejects overrides, choose between full inherited context and an explicit route rather than pretending both were applied. Never invent an unavailable model or effort.
 
 Escalate by failure class:
 
@@ -176,7 +172,7 @@ For non-trivial dispatch, return:
 
 ## Verification
 
-Run the decision and routing cases in `references/smoke-tests.md` in a fresh session after installation or a material update. A passing result must also separate native Luna from the codegen-only CLI bridge, reject the bridge for exploratory scouting/search, and apply the relative-strength independent-review rule.
+Run the decision and routing cases in `references/smoke-tests.md` in a fresh session after installation or a material update. A passing result must exercise native per-spawn model/effort overrides, distinguish low-judgment scouts from exploratory judgment-heavy work, and apply the relative-strength independent-review rule.
 
 ## Attribution
 
